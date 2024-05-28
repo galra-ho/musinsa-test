@@ -1,17 +1,16 @@
 package com.example.musinsa.domain.entity
 
+import com.example.musinsa.domain.enums.CategoryCode
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "brand")
-class BrandEntity(
+@Table(name = "category")
+class CategoryEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
 
     @Column(name = "name")
-    val name: String,
-
-    @Column(name = "is_deleted")
-    val isDeleted: Boolean,
-): BaseEntity()
+    @Enumerated(EnumType.STRING)
+    val name: CategoryCode
+) : BaseEntity()

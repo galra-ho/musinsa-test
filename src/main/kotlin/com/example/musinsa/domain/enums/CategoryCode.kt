@@ -1,7 +1,5 @@
 package com.example.musinsa.domain.enums
 
-import org.springframework.context.annotation.Description
-
 enum class CategoryCode(
     val description: String
 ) {

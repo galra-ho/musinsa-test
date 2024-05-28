@@ -1,7 +1,7 @@
 package com.example.musinsa.domain.entity
 
-import com.example.musinsa.domain.enums.CategoryCode
 import jakarta.persistence.*
+import java.math.BigDecimal
 
 @Entity
 @Table(name = "product")
@@ -10,13 +10,17 @@ class ProductEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
 
-    @Column(name = "brand_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
     val brand: BrandEntity,
 
-    @Column(name = "category", nullable = false)
-    val category: CategoryCode,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    val category: CategoryEntity,
 
-    @Column(name = "price", nullable = false)
-    val price: Int
+    @Column(name = "price")
+    val price: BigDecimal,
+
+    @Column(name = "is_deleted")
+    val isDeleted: Boolean,
 ) : BaseEntity()
