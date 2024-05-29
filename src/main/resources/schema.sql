@@ -14,7 +14,7 @@ CREATE TABLE brand
 CREATE TABLE category
 (
     id         BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name       VARCHAR(30) NOT NULL,
+    code       VARCHAR(30) NOT NULL,
     created_at TIMESTAMP   NOT NULL,
     updated_at TIMESTAMP   NOT NULL
 );
