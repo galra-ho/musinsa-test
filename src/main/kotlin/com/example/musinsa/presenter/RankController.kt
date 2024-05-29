@@ -11,7 +11,7 @@ class RankController(
 
     @GetMapping("/category/min-price")
     fun getMinPriceByCategory() {
-        getMinPriceService.getCategory()
+        getMinPriceService.getBrandAndProductByCategory()
     }
 
     @GetMapping("/brand/min-price")

@@ -12,5 +12,5 @@ class CategoryEntity(
 
     @Column(name = "name")
     @Enumerated(EnumType.STRING)
-    val name: CategoryCode
+    val code: CategoryCode
 ) : BaseEntity()
