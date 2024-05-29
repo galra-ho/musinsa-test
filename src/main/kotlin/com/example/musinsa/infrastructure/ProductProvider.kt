@@ -1,17 +1,23 @@
 package com.example.musinsa.infrastructure
 
-import com.example.musinsa.common.ImplementService
+import com.example.musinsa.domain.Products
+import com.example.musinsa.domain.entity.BrandEntity
+import com.example.musinsa.domain.entity.CategoryEntity
 import com.example.musinsa.domain.entity.ProductEntity
-import com.example.musinsa.domain.enums.CategoryCode
 import com.example.musinsa.infrastructure.repository.ProductJpaRepository
 import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 
-@Component
+@Repository
 class ProductProvider(
     private val productJpaRepository: ProductJpaRepository
 ) {
-    fun findByCategory(category: CategoryCode): List<ProductEntity> {
-        return productJpaRepository.findAllByCategoryAndIsDeletedFalse(category)
+    fun findByCategory(category: CategoryEntity): List<ProductEntity> {
+        return productJpaRepository.findAllByCategory(category)
+    }
+
+    fun findAllByCategoryAndBrand(brand: BrandEntity): Products {
+        return Products(productJpaRepository.findAllByBrandAndIsDeletedFalse(brand))
     }
 
 }
