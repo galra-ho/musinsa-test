@@ -8,6 +8,7 @@ import com.example.musinsa.domain.entity.CategoryEntity
 import com.example.musinsa.infrastructure.BrandProvider
 import com.example.musinsa.infrastructure.CategoryProvider
 import com.example.musinsa.infrastructure.ProductProvider
+import org.springframework.transaction.annotation.Transactional
 import java.lang.IllegalArgumentException
 
 @ApplicationService
@@ -17,6 +18,7 @@ class GetMinPriceService(
     private val productProvider: ProductProvider,
     private val calculateMinPriceService: CalculateMinPriceService
 ) {
+    @Transactional(readOnly = true)
     fun getBrandAndProductByCategory(): MinPriceByCategoryResponse {
         val categories = categoryProvider.getAll()
         val brandMap = brandProvider.getAll()
@@ -36,9 +38,12 @@ class GetMinPriceService(
 
     }
 
+    @Transactional(readOnly = true)
     fun getBrand() {
-        TODO("Not yet implemented")
+
     }
+
+    @Transactional(readOnly = true)
 
     fun searchCategory() {
         TODO("Not yet implemented")
