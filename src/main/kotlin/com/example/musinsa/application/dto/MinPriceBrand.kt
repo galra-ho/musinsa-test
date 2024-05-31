@@ -10,7 +10,10 @@ data class MinPriceBrand(
     val products: Products
 ) {
     companion object {
-        fun of(products: Products, brandEntity: BrandEntity): MinPriceBrand {
+        fun of(
+            products: Products,
+            brandEntity: BrandEntity
+        ): MinPriceBrand {
             return MinPriceBrand(
                 minPrice = products.calcTotalMinPrice(),
                 brandEntity = brandEntity,

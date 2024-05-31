@@ -16,16 +16,15 @@ import org.springframework.transaction.annotation.Transactional
 import java.lang.IllegalArgumentException
 
 @ApplicationService
-class GetMinPriceService(
+class GetPriceRankService(
     private val categoryProvider: CategoryProvider,
     private val brandProvider: BrandProvider,
-    private val productProvider: ProductProvider,
-    private val calculateMinPriceService: CalculateMinPriceService
+    private val productProvider: ProductProvider
 ) {
     @Transactional(readOnly = true)
     fun getBrandAndProductByCategory(): MinPriceByCategoryResponse {
-        val categories = categoryProvider.getAll()
-        val brandMap = brandProvider.getAll()
+        val categories = categoryProvider.findAll()
+        val brandMap = brandProvider.findAll()
             .associateBy { it.id }
         val result = makeMinPriceProduct(categories, brandMap)
 
@@ -45,23 +44,27 @@ class GetMinPriceService(
 
     @Transactional(readOnly = true)
     fun getBrand(): MinPriceBrandResponse {
-        val brands = brandProvider.getAll()
-
-        val categoriesMap = categoryProvider.getAll()
+        val brands = brandProvider.findAll()
+        val categoriesMap = categoryProvider.findAll()
             .associateBy { it.id }
+        // 카테고리별 최저가격 브랜드를 구한다
+        val minPriceBrandByCategory = getMinPriceBrandByCategory(brands)
 
-        val minPriceBrand = brands.map {
-            val result = productProvider.findAllByCategoryAndBrand(brand = it)
-                .getMinPriceByCategory()
+        return MinPriceBrandResponse.of(minPriceBrandByCategory, categoriesMap)
+    }
+
+    private fun getMinPriceBrandByCategory(brands: List<BrandEntity>): MinPriceBrand {
+        return brands.map {
+            val result =
+                productProvider.findAllByCategoryAndBrand(brand = it)
+                    .getMinPriceByCategory()
 
             MinPriceBrand.of(result, it)
         }.minBy { it.minPrice }
-
-        return MinPriceBrandResponse.of(minPriceBrand, categoriesMap)
     }
 
     @Transactional(readOnly = true)
-    fun searchByCategory(code: CategoryCode): SearchCategoryResponse {
+    fun searchMinAndMaxPriceBrandByCategory(code: CategoryCode): SearchCategoryResponse {
         val category = categoryProvider.findByCategoryCode(code)
         val products = productProvider.findByCategory(category)
         val minPriceProduct = products.getMinPriceProduct()

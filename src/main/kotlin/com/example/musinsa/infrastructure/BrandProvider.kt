@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 class BrandProvider(
     private val brandJpaRepository: BrandJpaRepository
 ) {
-    fun getAll(): List<BrandEntity> {
+    fun findAll(): List<BrandEntity> {
         return brandJpaRepository.findAll()
     }
 
