@@ -7,7 +7,7 @@ import com.example.musinsa.domain.enums.CategoryCode
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ProductJpaRepository : JpaRepository<ProductEntity, Long> {
-    fun findAllByCategory(code: CategoryEntity): List<ProductEntity>
+    fun findAllByCategoryAndIsDeletedFalse(code: CategoryEntity): List<ProductEntity>
 
     fun findAllByBrandAndIsDeletedFalse(brand: BrandEntity): List<ProductEntity>
 }

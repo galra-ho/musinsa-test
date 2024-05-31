@@ -10,9 +10,10 @@ data class MinPriceBrandResponse(
     val categories: List<MinPriceProductResponse>
 ) {
     companion object {
-        fun from(minPriceBrand: MinPriceBrand, categoriesMap: Map<Long, CategoryEntity>): MinPriceBrandResponse {
-
-
+        fun of(
+            minPriceBrand: MinPriceBrand,
+            categoriesMap: Map<Long, CategoryEntity>
+        ): MinPriceBrandResponse {
             return MinPriceBrandResponse(
                 brandName = minPriceBrand.brandEntity.name,
                 categories = minPriceBrand.products.productEntity.map {

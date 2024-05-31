@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository
 class ProductProvider(
     private val productJpaRepository: ProductJpaRepository
 ) {
-    fun findByCategory(category: CategoryEntity): List<ProductEntity> {
-        return productJpaRepository.findAllByCategory(category)
+    fun findByCategory(category: CategoryEntity): Products {
+        return Products(productJpaRepository.findAllByCategoryAndIsDeletedFalse(category))
     }
 
     fun findAllByCategoryAndBrand(brand: BrandEntity): Products {

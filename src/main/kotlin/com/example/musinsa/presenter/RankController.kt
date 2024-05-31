@@ -1,7 +1,9 @@
 package com.example.musinsa.presenter
 
 import com.example.musinsa.application.GetMinPriceService
+import com.example.musinsa.domain.enums.CategoryCode
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -20,7 +22,9 @@ class RankController(
     }
 
     @GetMapping("/price/search")
-    fun searchMinPriceByCategory() {
-        getMinPriceService.searchCategory()
+    fun searchMinAndMaxPriceBrandByCategory(
+        @RequestParam category: CategoryCode
+    ) {
+        getMinPriceService.searchByCategory(category)
     }
 }

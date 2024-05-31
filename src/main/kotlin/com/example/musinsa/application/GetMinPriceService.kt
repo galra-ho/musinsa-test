@@ -6,10 +6,12 @@ import com.example.musinsa.application.request.MinPriceProductResponse
 import com.example.musinsa.common.ApplicationService
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
+import com.example.musinsa.domain.enums.CategoryCode
 import com.example.musinsa.infrastructure.BrandProvider
 import com.example.musinsa.infrastructure.CategoryProvider
 import com.example.musinsa.infrastructure.ProductProvider
 import com.example.musinsa.presenter.response.MinPriceBrandResponse
+import com.example.musinsa.presenter.response.SearchCategoryResponse
 import org.springframework.transaction.annotation.Transactional
 import java.lang.IllegalArgumentException
 
@@ -35,8 +37,7 @@ class GetMinPriceService(
         brandMap: Map<Long, BrandEntity>
     ): List<MinPriceProductResponse> {
         return categories.map { category ->
-            val product = productProvider.findByCategory(category).minByOrNull { it.price }
-                ?: throw IllegalArgumentException()
+            val product = productProvider.findByCategory(category).getMinPriceProduct()
             val brand = brandMap[product.brand.id] ?: throw IllegalArgumentException()
             MinPriceProductResponse.of(product, brand, category)
         }
@@ -56,12 +57,27 @@ class GetMinPriceService(
             MinPriceBrand.of(result, it)
         }.minBy { it.minPrice }
 
-        return MinPriceBrandResponse.from(minPriceBrand, categoriesMap)
+        return MinPriceBrandResponse.of(minPriceBrand, categoriesMap)
     }
 
     @Transactional(readOnly = true)
+    fun searchByCategory(code: CategoryCode): SearchCategoryResponse {
+        val category = categoryProvider.findByCategoryCode(code)
+        val products = productProvider.findByCategory(category)
+        val minPriceProduct = products.getMinPriceProduct()
+        val maxPriceProduct = products.getMaxPriceProduct(products.productEntity)
 
-    fun searchCategory() {
-        TODO("Not yet implemented")
+        val brandMap = brandProvider.findAllByIdIn(
+            listOf(minPriceProduct.brand.id, maxPriceProduct.brand.id)
+        ).associateBy { it.id }
+
+
+        return SearchCategoryResponse.of(
+            category = category,
+            minPriceBrand = brandMap[minPriceProduct.brand.id],
+            maxPriceBrand = brandMap[maxPriceProduct.brand.id],
+            maxPriceProduct = maxPriceProduct,
+            minPriceProduct = minPriceProduct
+        )
     }
 }
