@@ -1,7 +1,7 @@
 package com.example.musinsa.presenter
 
-import com.example.musinsa.application.GetPriceRankService
-import com.example.musinsa.application.request.MinPriceByCategoryResponse
+import com.example.musinsa.application.GetPriceRankApplicationService
+import com.example.musinsa.presenter.response.MinPriceByCategoryResponse
 import com.example.musinsa.common.CommonResponse
 import com.example.musinsa.domain.enums.CategoryCode
 import com.example.musinsa.presenter.response.MinPriceBrandResponse
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class RankController(
-    private val getMinPriceRankService: GetPriceRankService
+    private val getMinPriceRankService: GetPriceRankApplicationService
 ) {
     @GetMapping("/category/min-price")
     fun getMinPriceByCategory(): ResponseEntity<MinPriceByCategoryResponse> {

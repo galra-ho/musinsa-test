@@ -10,9 +10,4 @@ annotation class ApplicationService
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 @Service
-annotation class DomainService
-
-@Target(AnnotationTarget.CLASS)
-@Retention(AnnotationRetention.RUNTIME)
-@Service
 annotation class ImplementService

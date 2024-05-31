@@ -1,8 +1,6 @@
 package com.example.musinsa.application
 
 import com.example.musinsa.application.dto.MinPriceBrand
-import com.example.musinsa.application.request.MinPriceByCategoryResponse
-import com.example.musinsa.application.request.MinPriceProductResponse
 import com.example.musinsa.common.ApplicationService
 import com.example.musinsa.common.ErrorCode
 import com.example.musinsa.common.NotFoundException
@@ -13,11 +11,13 @@ import com.example.musinsa.infrastructure.BrandProvider
 import com.example.musinsa.infrastructure.CategoryProvider
 import com.example.musinsa.infrastructure.ProductProvider
 import com.example.musinsa.presenter.response.MinPriceBrandResponse
+import com.example.musinsa.presenter.response.MinPriceByCategoryResponse
+import com.example.musinsa.presenter.response.MinPriceProductResponse
 import com.example.musinsa.presenter.response.SearchCategoryResponse
 import org.springframework.transaction.annotation.Transactional
 
 @ApplicationService
-class GetPriceRankService(
+class GetPriceRankApplicationService(
     private val categoryProvider: CategoryProvider,
     private val brandProvider: BrandProvider,
     private val productProvider: ProductProvider

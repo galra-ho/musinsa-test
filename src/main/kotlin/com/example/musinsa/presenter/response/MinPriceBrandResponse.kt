@@ -7,7 +7,7 @@ import java.math.BigDecimal
 
 data class MinPriceBrandResponse(
     val brandName: String,
-    val categories: List<MinPriceProductResponse>
+    val categories: List<MinPriceCategoryResponse>
 ) {
     companion object {
         fun of(
@@ -17,7 +17,7 @@ data class MinPriceBrandResponse(
             return MinPriceBrandResponse(
                 brandName = minPriceBrand.brandEntity.name,
                 categories = minPriceBrand.products.productEntity.map {
-                    MinPriceProductResponse(
+                    MinPriceCategoryResponse(
                         code = categoriesMap[it.category.id]?.code!!,
                         price = it.price
                     )
@@ -28,7 +28,7 @@ data class MinPriceBrandResponse(
     }
 }
 
-data class MinPriceProductResponse(
+data class MinPriceCategoryResponse(
     val code: CategoryCode,
     val price: BigDecimal
 )

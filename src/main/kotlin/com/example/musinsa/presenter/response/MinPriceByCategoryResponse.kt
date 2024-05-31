@@ -1,4 +1,4 @@
-package com.example.musinsa.application.request
+package com.example.musinsa.presenter.response
 
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
@@ -10,7 +10,7 @@ data class MinPriceByCategoryResponse(
     val minPriceProductInfo: List<MinPriceProductResponse>,
     val totalPrice: BigDecimal
 ) {
-    companion object {
+    companion object { 
         fun from(
             response: List<MinPriceProductResponse>
         ): MinPriceByCategoryResponse =

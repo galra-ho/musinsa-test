@@ -1,5 +1,6 @@
 package com.example.musinsa.infrastructure
 
+import com.example.musinsa.common.ImplementService
 import com.example.musinsa.domain.Products
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
@@ -8,7 +9,7 @@ import com.example.musinsa.infrastructure.repository.ProductJpaRepository
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Repository
 
-@Repository
+@Component
 class ProductProvider(
     private val productJpaRepository: ProductJpaRepository
 ) {
