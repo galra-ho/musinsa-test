@@ -1,5 +1,7 @@
 package com.example.musinsa.presenter.response
 
+import com.example.musinsa.common.ErrorCode
+import com.example.musinsa.common.NotFoundException
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
 import com.example.musinsa.domain.entity.ProductEntity
@@ -21,13 +23,13 @@ data class SearchCategoryResponse(
         ): SearchCategoryResponse {
             val maxPriceProductResponse =
                 SearchBrandProductResponse(
-                    brandName = maxPriceBrand?.name ?: throw IllegalArgumentException(),
+                    brandName = maxPriceBrand?.name ?: throw NotFoundException(ErrorCode.NOT_FOUND_BRAND),
                     price = maxPriceProduct.price
                 )
 
             val minPriceProductResponse =
                 SearchBrandProductResponse(
-                    brandName = minPriceBrand?.name ?: throw IllegalArgumentException(),
+                    brandName = minPriceBrand?.name ?: throw NotFoundException(ErrorCode.NOT_FOUND_BRAND),
                     price = minPriceProduct.price
                 )
 

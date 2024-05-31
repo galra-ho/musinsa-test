@@ -1,6 +1,7 @@
 package com.example.musinsa.domain
 
 import com.example.musinsa.common.ErrorCode.NOT_FOUND_PRICE
+import com.example.musinsa.common.NotFoundException
 import com.example.musinsa.domain.entity.ProductEntity
 import java.math.BigDecimal
 
@@ -30,11 +31,11 @@ value class Products(
     private fun getMinPriceProduct(productEntity: List<ProductEntity>): ProductEntity {
         return productEntity
             .minByOrNull { it.price }
-            ?: throw IllegalArgumentException(NOT_FOUND_PRICE.message)
+            ?: throw NotFoundException(NOT_FOUND_PRICE)
     }
 
-    fun getMaxPriceProduct(productEntity: List<ProductEntity>): ProductEntity =
+    fun getMaxPriceProduct(): ProductEntity =
         this.productEntity
             .maxByOrNull { it.price }
-            ?: throw IllegalArgumentException(NOT_FOUND_PRICE.message)
+            ?: throw NotFoundException(NOT_FOUND_PRICE)
 }

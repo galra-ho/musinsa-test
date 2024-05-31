@@ -4,6 +4,8 @@ import com.example.musinsa.application.dto.MinPriceBrand
 import com.example.musinsa.application.request.MinPriceByCategoryResponse
 import com.example.musinsa.application.request.MinPriceProductResponse
 import com.example.musinsa.common.ApplicationService
+import com.example.musinsa.common.ErrorCode
+import com.example.musinsa.common.NotFoundException
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
 import com.example.musinsa.domain.enums.CategoryCode
@@ -13,7 +15,6 @@ import com.example.musinsa.infrastructure.ProductProvider
 import com.example.musinsa.presenter.response.MinPriceBrandResponse
 import com.example.musinsa.presenter.response.SearchCategoryResponse
 import org.springframework.transaction.annotation.Transactional
-import java.lang.IllegalArgumentException
 
 @ApplicationService
 class GetPriceRankService(
@@ -37,7 +38,7 @@ class GetPriceRankService(
     ): List<MinPriceProductResponse> {
         return categories.map { category ->
             val product = productProvider.findByCategory(category).getMinPriceProduct()
-            val brand = brandMap[product.brand.id] ?: throw IllegalArgumentException()
+            val brand = brandMap[product.brand.id] ?: throw NotFoundException(ErrorCode.NOT_FOUND_BRAND)
             MinPriceProductResponse.of(product, brand, category)
         }
     }
