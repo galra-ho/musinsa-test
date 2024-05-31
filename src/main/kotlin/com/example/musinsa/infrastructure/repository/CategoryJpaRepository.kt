@@ -5,5 +5,5 @@ import com.example.musinsa.domain.enums.CategoryCode
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface CategoryJpaRepository : JpaRepository<CategoryEntity, Long> {
-    fun findByCode(code: CategoryCode): CategoryEntity
+    fun findByCode(code: CategoryCode): CategoryEntity?
 }

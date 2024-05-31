@@ -1,13 +1,12 @@
 package com.example.musinsa.infrastructure
 
-import com.example.musinsa.common.ImplementService
+import com.example.musinsa.domain.ProductPrice
 import com.example.musinsa.domain.Products
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
 import com.example.musinsa.domain.entity.ProductEntity
 import com.example.musinsa.infrastructure.repository.ProductJpaRepository
 import org.springframework.stereotype.Component
-import org.springframework.stereotype.Repository
 
 @Component
 class ProductProvider(
@@ -21,4 +20,11 @@ class ProductProvider(
         return Products(productJpaRepository.findAllByBrandAndIsDeletedFalse(brand))
     }
 
+    fun save(product: ProductEntity): ProductEntity {
+        return productJpaRepository.save(product)
+    }
+
+    fun findNullableById(id: Long): ProductEntity? {
+        return productJpaRepository.findByIdAndIsDeletedFalse(id)
+    }
 }

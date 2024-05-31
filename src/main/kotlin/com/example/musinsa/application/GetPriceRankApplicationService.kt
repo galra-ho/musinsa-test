@@ -66,7 +66,7 @@ class GetPriceRankApplicationService(
 
     @Transactional(readOnly = true)
     fun searchMinAndMaxPriceBrandByCategory(code: CategoryCode): SearchCategoryResponse {
-        val category = categoryProvider.findByCategoryCode(code)
+        val category = categoryProvider.findNullableByCategoryCode(code)
         val products = productProvider.findByCategory(category)
         val minPriceProduct = products.getMinPriceProduct()
         val maxPriceProduct = products.getMaxPriceProduct()
