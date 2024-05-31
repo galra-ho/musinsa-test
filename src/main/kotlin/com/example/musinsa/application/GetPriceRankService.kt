@@ -69,7 +69,7 @@ class GetPriceRankService(
         val category = categoryProvider.findByCategoryCode(code)
         val products = productProvider.findByCategory(category)
         val minPriceProduct = products.getMinPriceProduct()
-        val maxPriceProduct = products.getMaxPriceProduct(products.productEntity)
+        val maxPriceProduct = products.getMaxPriceProduct()
 
         val brandMap = brandProvider.findAllByIdIn(
             listOf(minPriceProduct.brand.id, maxPriceProduct.brand.id)
