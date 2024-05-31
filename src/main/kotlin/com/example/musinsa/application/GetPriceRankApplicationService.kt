@@ -7,9 +7,6 @@ import com.example.musinsa.common.NotFoundException
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
 import com.example.musinsa.domain.enums.CategoryCode
-import com.example.musinsa.infrastructure.BrandProvider
-import com.example.musinsa.infrastructure.CategoryProvider
-import com.example.musinsa.infrastructure.ProductProvider
 import com.example.musinsa.presenter.response.MinPriceBrandResponse
 import com.example.musinsa.presenter.response.MinPriceByCategoryResponse
 import com.example.musinsa.presenter.response.MinPriceProductResponse
@@ -18,15 +15,14 @@ import org.springframework.transaction.annotation.Transactional
 
 @ApplicationService
 class GetPriceRankApplicationService(
-    private val categoryProvider: CategoryProvider,
-    private val brandProvider: BrandProvider,
-    private val productProvider: ProductProvider
+    private val getCategoryService: GetCategoryService,
+    private val getBrandService: GetBrandService,
+    private val getProductService: GetProductService
 ) {
     @Transactional(readOnly = true)
     fun getBrandAndProductByCategory(): MinPriceByCategoryResponse {
-        val categories = categoryProvider.findAll()
-        val brandMap = brandProvider.findAll()
-            .associateBy { it.id }
+        val categories = getCategoryService.getAll()
+        val brandMap = getBrandService.getBrandMap()
         val result = makeMinPriceProduct(categories, brandMap)
 
         return MinPriceByCategoryResponse.from(result)
@@ -37,51 +33,44 @@ class GetPriceRankApplicationService(
         brandMap: Map<Long, BrandEntity>
     ): List<MinPriceProductResponse> {
         return categories.map { category ->
-            val product = productProvider.findByCategory(category).getMinPriceProduct()
-            val brand = brandMap[product.brand.id] ?: throw NotFoundException(ErrorCode.NOT_FOUND_BRAND)
+            val product = getProductService.getMinPriceCategory(category)
+            val brand = brandMap[product.brand.id]
+                ?: throw NotFoundException(ErrorCode.NOT_FOUND_BRAND)
             MinPriceProductResponse.of(product, brand, category)
         }
     }
 
     @Transactional(readOnly = true)
     fun getBrand(): MinPriceBrandResponse {
-        val brands = brandProvider.findAll()
-        val categoriesMap = categoryProvider.findAll()
-            .associateBy { it.id }
+        val brands = getBrandService.getAll()
+        val categoriesMap = getCategoryService.getCategoryMap()
         // 카테고리별 최저가격 브랜드를 구한다
-        val minPriceBrandByCategory = getMinPriceBrandByCategory(brands)
+        val minPriceBrandByCategory = getMinPriceBrandsByCategory(brands)
 
         return MinPriceBrandResponse.of(minPriceBrandByCategory, categoriesMap)
     }
 
-    private fun getMinPriceBrandByCategory(brands: List<BrandEntity>): MinPriceBrand {
+    private fun getMinPriceBrandsByCategory(brands: List<BrandEntity>): MinPriceBrand {
         return brands.map {
-            val result =
-                productProvider.findAllByCategoryAndBrand(brand = it)
-                    .getMinPriceByCategory()
-
+            val result = getProductService.getMinPriceByBrand(it)
             MinPriceBrand.of(result, it)
         }.minBy { it.minPrice }
     }
 
     @Transactional(readOnly = true)
     fun searchMinAndMaxPriceBrandByCategory(code: CategoryCode): SearchCategoryResponse {
-        val category = categoryProvider.findNullableByCategoryCode(code)
-        val products = productProvider.findByCategory(category)
-        val minPriceProduct = products.getMinPriceProduct()
-        val maxPriceProduct = products.getMaxPriceProduct()
-
-        val brandMap = brandProvider.findAllByIdIn(
-            listOf(minPriceProduct.brand.id, maxPriceProduct.brand.id)
-        ).associateBy { it.id }
-
+        val category = getCategoryService.getNullableByCategoryCode(code)
+        val minPriceAndMaxPriceProduct =
+            getProductService.getMinProductAndMaxProduct(category)
+        val brandIds = minPriceAndMaxPriceProduct.getBrandIds()
+        val brandMap = getBrandService.getMapByBrandIds(brandIds)
 
         return SearchCategoryResponse.of(
             category = category,
-            minPriceBrand = brandMap[minPriceProduct.brand.id],
-            maxPriceBrand = brandMap[maxPriceProduct.brand.id],
-            maxPriceProduct = maxPriceProduct,
-            minPriceProduct = minPriceProduct
+            minPriceBrand = brandMap[minPriceAndMaxPriceProduct.minPriceProduct.brand.id],
+            maxPriceBrand = brandMap[minPriceAndMaxPriceProduct.maxPriceProduct.brand.id],
+            maxPriceProduct = minPriceAndMaxPriceProduct.maxPriceProduct,
+            minPriceProduct = minPriceAndMaxPriceProduct.minPriceProduct
         )
     }
 }

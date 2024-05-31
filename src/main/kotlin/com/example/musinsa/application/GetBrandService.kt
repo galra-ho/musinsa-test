@@ -18,4 +18,17 @@ class GetBrandService(
         return brandProvider.findNullableById(id)
             ?: throw NotFoundException(ErrorCode.NOT_FOUND_BRAND)
     }
+
+    fun getBrandMap(): Map<Long, BrandEntity> {
+        return brandProvider.findAll().associateBy { it.id!! }
+    }
+
+    fun getAll(): List<BrandEntity> {
+        return brandProvider.findAll()
+    }
+
+    fun getMapByBrandIds(brandIds: List<Long>): Map<Long, BrandEntity> {
+        return brandProvider.findAllByIdIn(brandIds)
+            .associateBy { it.id!! }
+    }
 }

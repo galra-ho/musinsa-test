@@ -16,7 +16,7 @@ class SetProductApplicationService(
     @Transactional
     fun add(request: AddProductRequest): AddProductResponse {
         val brand = getBrandService.getById(request.brandId)
-        val category = getCategoryService.findByCode(request.categoryCode)
+        val category = getCategoryService.getByCode(request.categoryCode)
         val addProduct = setProductService.addProduct(brand, category, request.price)
 
         return AddProductResponse.from(addProduct)
@@ -26,7 +26,7 @@ class SetProductApplicationService(
     fun update(request: UpdateProductRequest, id: Long): UpdateProductResponse {
         val findProduct = getProductService.getById(id)
         val brand = getBrandService.getById(request.updateBrandId)
-        val category = getCategoryService.findByCode(request.updateCategoryCode)
+        val category = getCategoryService.getByCode(request.updateCategoryCode)
         val updateProduct = setProductService.update(
             findProduct, brand, category, request.updatePrice
         )

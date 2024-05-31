@@ -2,10 +2,10 @@ package com.example.musinsa.presenter.response
 
 import com.example.musinsa.common.ErrorCode
 import com.example.musinsa.common.NotFoundException
+import com.example.musinsa.domain.ProductPrice
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
 import com.example.musinsa.domain.entity.ProductEntity
-import com.example.musinsa.domain.enums.CategoryCode
 import java.math.BigDecimal
 
 data class SearchCategoryResponse(
@@ -44,5 +44,5 @@ data class SearchCategoryResponse(
 
 data class SearchBrandProductResponse(
     val brandName: String,
-    val price: BigDecimal
+    val price: ProductPrice
 )

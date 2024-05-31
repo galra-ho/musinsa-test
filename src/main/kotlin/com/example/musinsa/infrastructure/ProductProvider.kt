@@ -1,6 +1,5 @@
 package com.example.musinsa.infrastructure
 
-import com.example.musinsa.domain.ProductPrice
 import com.example.musinsa.domain.Products
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
@@ -16,7 +15,7 @@ class ProductProvider(
         return Products(productJpaRepository.findAllByCategoryAndIsDeletedFalse(category))
     }
 
-    fun findAllByCategoryAndBrand(brand: BrandEntity): Products {
+    fun findAllBrand(brand: BrandEntity): Products {
         return Products(productJpaRepository.findAllByBrandAndIsDeletedFalse(brand))
     }
 

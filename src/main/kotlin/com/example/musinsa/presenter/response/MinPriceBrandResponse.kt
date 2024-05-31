@@ -19,7 +19,7 @@ data class MinPriceBrandResponse(
                 categories = minPriceBrand.products.productEntity.map {
                     MinPriceCategoryResponse(
                         code = categoriesMap[it.category.id]?.code!!,
-                        price = it.price
+                        price = it.price.price
                     )
                 }
             )

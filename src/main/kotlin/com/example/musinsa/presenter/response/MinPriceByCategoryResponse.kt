@@ -35,7 +35,7 @@ data class MinPriceProductResponse(
             MinPriceProductResponse(
                 categoryCode = categoryEntity.code,
                 brandName = brand.name,
-                price = product.price
+                price = product.price.price
             )
     }
 }
