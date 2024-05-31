@@ -7,11 +7,30 @@ import jakarta.persistence.*
 data class BrandEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long? = null,
 
     @Column(name = "name")
-    val name: String,
+    var name: String,
 
     @Column(name = "is_deleted")
-    val isDeleted: Boolean,
-): BaseEntity()
+    var isDeleted: Boolean,
+): BaseEntity() {
+    fun update(brandName: String): BrandEntity {
+        this.name = brandName
+        return this
+    }
+
+    fun delete(): BrandEntity {
+        this.isDeleted = true
+        return this
+    }
+
+    companion object {
+        fun from(productName: String): BrandEntity {
+            return BrandEntity(
+                name = productName,
+                isDeleted = false
+            )
+        }
+    }
+}

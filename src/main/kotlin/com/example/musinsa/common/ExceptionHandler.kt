@@ -16,6 +16,13 @@ class ExceptionHandler {
         )
     }
 
+    @ExceptionHandler(value = [IllegalArgumentException::class])
+    fun illegalArgumentException(exception: CommonException): ResponseEntity<String> {
+        return CommonResponse.convert(
+            exception.errorCode.message, HttpStatus.BAD_REQUEST
+        )
+    }
+
     @ExceptionHandler(value = [Exception::class])
     fun exception(exception: Exception): ResponseEntity<String?> {
         return CommonResponse.convert(

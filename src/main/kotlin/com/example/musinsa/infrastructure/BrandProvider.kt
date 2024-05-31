@@ -1,11 +1,11 @@
 package com.example.musinsa.infrastructure
 
-import com.example.musinsa.common.ImplementService
+import com.example.musinsa.common.ErrorCode
+import com.example.musinsa.common.NotFoundException
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.infrastructure.repository.BrandJpaRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
-import org.springframework.stereotype.Repository
-import org.springframework.stereotype.Service
 
 @Component
 class BrandProvider(
@@ -19,7 +19,15 @@ class BrandProvider(
         return brandJpaRepository.findAllByIdIn(brandIds)
     }
 
-    fun findByName(productName: String) {
-        TODO("Not yet implemented")
+    fun findNullableByName(brandName: String): BrandEntity? {
+        return brandJpaRepository.findByNameAndIsDeletedFalse(brandName)
+    }
+
+    fun save(brand: BrandEntity): BrandEntity {
+        return brandJpaRepository.save(brand)
+    }
+
+    fun findNullableById(id: Long): BrandEntity? {
+        return brandJpaRepository.findByIdAndIsDeletedFalse(id)
     }
 }
