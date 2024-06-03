@@ -23,7 +23,7 @@ class RankController(
 
     @GetMapping("/brand/min-price")
     fun getMinPriceByBrand(): ResponseEntity<MinPriceBrandResponse> {
-        val result = getMinPriceRankService.getBrand()
+        val result = getMinPriceRankService.getMinPriceBrand()
         return CommonResponse.convert(result)
     }
 

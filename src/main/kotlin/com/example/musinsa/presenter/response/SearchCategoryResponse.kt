@@ -6,9 +6,10 @@ import com.example.musinsa.domain.ProductPrice
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
 import com.example.musinsa.domain.entity.ProductEntity
+import com.example.musinsa.domain.enums.CategoryCode
 
 data class SearchCategoryResponse(
-    val category: String,
+    val category: CategoryCode,
     val minPriceBrand: List<SearchBrandProductResponse>,
     val maxPriceBrand: List<SearchBrandProductResponse>
 ) {
@@ -33,7 +34,7 @@ data class SearchCategoryResponse(
                 )
 
             return SearchCategoryResponse(
-                category = category.code.description,
+                category = category.code,
                 maxPriceBrand = listOf(maxPriceProductResponse),
                 minPriceBrand = listOf(minPriceProductResponse)
             )

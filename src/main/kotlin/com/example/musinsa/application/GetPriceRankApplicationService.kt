@@ -1,12 +1,13 @@
 package com.example.musinsa.application
 
-import com.example.musinsa.application.dto.MinPriceBrand
+import com.example.musinsa.domain.BrandProducts
 import com.example.musinsa.common.ApplicationService
 import com.example.musinsa.common.ErrorCode
 import com.example.musinsa.common.NotFoundException
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
 import com.example.musinsa.domain.enums.CategoryCode
+import com.example.musinsa.domain.findMinPriceProductOfTheBrand
 import com.example.musinsa.presenter.response.MinPriceBrandResponse
 import com.example.musinsa.presenter.response.MinPriceByCategoryResponse
 import com.example.musinsa.presenter.response.MinPriceProductResponse
@@ -41,7 +42,7 @@ class GetPriceRankApplicationService(
     }
 
     @Transactional(readOnly = true)
-    fun getBrand(): MinPriceBrandResponse {
+    fun getMinPriceBrand(): MinPriceBrandResponse {
         val brands = getBrandService.getAll()
         val categoriesMap = getCategoryService.getCategoryMap()
         // 카테고리별 최저가격 브랜드를 구한다
@@ -50,11 +51,13 @@ class GetPriceRankApplicationService(
         return MinPriceBrandResponse.of(minPriceBrandByCategory, categoriesMap)
     }
 
-    private fun getMinPriceBrandsByCategory(brands: List<BrandEntity>): MinPriceBrand {
-        return brands.map {
+    private fun getMinPriceBrandsByCategory(brands: List<BrandEntity>): BrandProducts {
+        val brandProducts = brands.map {
             val result = getProductService.getMinPriceByBrand(it)
-            MinPriceBrand.of(result, it)
-        }.minBy { it.minPrice }
+            BrandProducts.of(result, it)
+        }
+
+        return brandProducts.findMinPriceProductOfTheBrand()
     }
 
     @Transactional(readOnly = true)

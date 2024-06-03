@@ -6,7 +6,7 @@ import java.math.BigDecimal
 
 @Entity
 @Table(name = "product")
-data class ProductEntity(
+class ProductEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,

@@ -7,7 +7,7 @@ import jakarta.persistence.Embeddable
 import java.math.BigDecimal
 
 @Embeddable
-class ProductPrice(
+data class ProductPrice(
     @Column(name = "price")
     private val value: BigDecimal
 ) {

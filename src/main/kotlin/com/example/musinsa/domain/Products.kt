@@ -19,11 +19,6 @@ value class Products(
         return Products(result)
     }
 
-    fun calcTotalMinPrice(): BigDecimal {
-        return this.productEntity
-            .sumOf { it.price.getValue() }
-    }
-
     fun getMinPriceProduct(): ProductEntity {
         val products =
             getMinPriceGroupByCategory().productEntity
@@ -41,4 +36,9 @@ value class Products(
         this.productEntity
             .maxByOrNull { it.price.getValue() }
             ?: throw NotFoundException(NOT_FOUND_PRICE)
+
+    fun sumTotalMinPrice(): BigDecimal {
+        return this.productEntity
+            .sumOf { it.price.getValue() }
+    }
 }
