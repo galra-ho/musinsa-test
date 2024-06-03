@@ -11,7 +11,7 @@ value class Products(
 ) {
     fun getMinPriceGroupByCategory(): Products {
         val result = this.productEntity
-            .groupBy { it.category.id }
+            .groupBy { it.category.id!! }
             .map { (_, product) ->
                 getMinPriceProduct(product)
             }

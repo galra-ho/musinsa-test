@@ -1,6 +1,6 @@
 package com.example.musinsa.application
 
-import com.example.musinsa.application.dto.MinAndMaxPriceProduct
+import com.example.musinsa.application.dto.MinAndMaxPriceProductDto
 import com.example.musinsa.domain.Products
 import com.example.musinsa.domain.enums.CategoryCode
 import com.example.musinsa.fixture.*
@@ -96,7 +96,7 @@ class GetPriceRankApplicationServiceTest {
 
         coEvery { getCategoryService.getNullableByCategoryCode(any()) } returns makeCategory(CategoryCode.TOP)
         coEvery { getProductService.getMinProductAndMaxProduct(any()) } returns
-                MinAndMaxPriceProduct(나이키_상의, 노스페이스_상의)
+                MinAndMaxPriceProductDto(나이키_상의, 노스페이스_상의)
         coEvery { getBrandService.getMapByBrandIds(any()) } returns brandMap
 
         val result = getPriceRankApplicationService.searchMinAndMaxPriceBrandByCategory(CategoryCode.TOP)
