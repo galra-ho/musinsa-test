@@ -28,7 +28,7 @@ class SetBrandApplicationService(
     @Transactional
     fun delete(id: Long): DeleteBrandResponse {
         val findBrand = getBrandService.getById(id)
-        val updateBoard = setBrandService.delete(findBrand)
-        return DeleteBrandResponse.from(updateBoard)
+        val deleteBoard = setBrandService.delete(findBrand)
+        return DeleteBrandResponse.from(deleteBoard)
     }
 }

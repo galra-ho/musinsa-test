@@ -8,7 +8,7 @@ import jakarta.persistence.*
 data class CategoryEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long? = null,
 
     @Column(name = "code")
     @Enumerated(EnumType.STRING)

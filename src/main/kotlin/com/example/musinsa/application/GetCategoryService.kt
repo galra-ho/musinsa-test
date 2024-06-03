@@ -27,7 +27,7 @@ class GetCategoryService(
 
     fun getCategoryMap(): Map<Long, CategoryEntity> {
         return getAll()
-            .associateBy { it.id }
+            .associateBy { it.id!! }
     }
 
     fun getNullableByCategoryCode(code: CategoryCode): CategoryEntity {
