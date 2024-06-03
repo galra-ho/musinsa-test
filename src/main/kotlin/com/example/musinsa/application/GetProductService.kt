@@ -1,6 +1,6 @@
 package com.example.musinsa.application
 
-import com.example.musinsa.application.dto.MinAndMaxPriceProduct
+import com.example.musinsa.application.dto.MinAndMaxPriceProductDto
 import com.example.musinsa.common.ErrorCode
 import com.example.musinsa.common.ImplementService
 import com.example.musinsa.common.NotFoundException
@@ -34,8 +34,8 @@ class GetProductService(
     }
 
     @Transactional(readOnly = true)
-    fun getMinProductAndMaxProduct(category: CategoryEntity): MinAndMaxPriceProduct {
+    fun getMinProductAndMaxProduct(category: CategoryEntity): MinAndMaxPriceProductDto {
         val products = productProvider.findByCategory(category)
-        return MinAndMaxPriceProduct.from(products)
+        return MinAndMaxPriceProductDto.from(products)
     }
 }

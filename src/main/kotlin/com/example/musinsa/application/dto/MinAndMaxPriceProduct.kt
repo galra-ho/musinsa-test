@@ -3,7 +3,7 @@ package com.example.musinsa.application.dto
 import com.example.musinsa.domain.Products
 import com.example.musinsa.domain.entity.ProductEntity
 
-data class MinAndMaxPriceProduct(
+data class MinAndMaxPriceProductDto(
     val minPriceProduct: ProductEntity,
     val maxPriceProduct: ProductEntity
 ) {
@@ -12,8 +12,8 @@ data class MinAndMaxPriceProduct(
     }
 
     companion object {
-        fun from(products: Products): MinAndMaxPriceProduct {
-            return MinAndMaxPriceProduct(
+        fun from(products: Products): MinAndMaxPriceProductDto {
+            return MinAndMaxPriceProductDto(
                 minPriceProduct = products.getMinPriceProduct(),
                 maxPriceProduct = products.getMaxPriceProduct()
             )
