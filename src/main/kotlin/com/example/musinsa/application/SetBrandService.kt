@@ -1,5 +1,6 @@
 package com.example.musinsa.application
 
+import com.example.musinsa.common.BadRequestException
 import com.example.musinsa.common.ErrorCode
 import com.example.musinsa.common.ImplementService
 import com.example.musinsa.domain.entity.BrandEntity
@@ -13,7 +14,7 @@ class SetBrandService(
     @Transactional
     fun addBrand(brand: BrandEntity?, brandName: String): BrandEntity {
         if (brand != null) {
-            throw IllegalArgumentException(ErrorCode.ALREADY_BRAND.message)
+            throw BadRequestException(ErrorCode.ALREADY_BRAND)
         }
 
         return brandProvider.save(BrandEntity.from(brandName))

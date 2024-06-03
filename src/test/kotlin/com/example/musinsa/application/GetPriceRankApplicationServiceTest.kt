@@ -6,6 +6,7 @@ import com.example.musinsa.domain.enums.CategoryCode
 import com.example.musinsa.fixture.*
 import com.example.musinsa.support.UnitTest
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -32,9 +33,9 @@ class GetPriceRankApplicationServiceTest {
 
         val 나이키_양말 = makeProduct(Product.나이키_양말, Brand.나이키)
 
-        coEvery { getCategoryService.getAll() } returns categories
-        coEvery { getBrandService.getBrandMap() } returns brandMap
-        coEvery { getProductService.getMinPriceByCategory(any()) } returns 나이키_양말
+        every { getCategoryService.getAll() } returns categories
+        every { getBrandService.getBrandMap() } returns brandMap
+        every { getProductService.getMinPriceByCategory(any()) } returns 나이키_양말
 
         val result = getPriceRankApplicationService.getBrandAndProductByCategory()
         assertThat(result.totalPrice).isEqualTo(나이키_양말.price.getValue())
@@ -59,15 +60,13 @@ class GetPriceRankApplicationServiceTest {
         val 아디다스_상의 = makeProduct(Product.아디다스_상의, Brand.아디다스)
 
 
-        coEvery { getBrandService.getAll() } returns listOf(makeBrand(Brand.나이키), makeBrand(Brand.아디다스))
+        every { getBrandService.getAll() } returns listOf(makeBrand(Brand.나이키), makeBrand(Brand.아디다스))
 
-
-        coEvery { getCategoryService.getCategoryMap() } returns categoryCodeMap
-        coEvery { getProductService.getMinPriceByBrand(makeBrand(Brand.나이키)) } returns
-                Products(listOf(나이키_신발, 나이키_상의, 나이키_양말))
-
-        coEvery { getProductService.getMinPriceByBrand(makeBrand(Brand.아디다스)) } returns
+        every { getCategoryService.getCategoryMap() } returns categoryCodeMap
+        every { getProductService.getMinPriceByBrand(makeBrand(Brand.아디다스)) } returns
                 Products(listOf(아디다스_양말, 아디다스_신발, 아디다스_상의))
+        every { getProductService.getMinPriceByBrand(makeBrand(Brand.나이키)) } returns
+                Products(listOf(나이키_신발, 나이키_상의, 나이키_양말))
 
 
 
@@ -94,17 +93,17 @@ class GetPriceRankApplicationServiceTest {
         val 나이키_상의 = makeProduct(Product.나이키_상의, Brand.나이키)
         val 노스페이스_상의 = makeProduct(Product.노스페이스_상의, Brand.노스페이스)
 
-        coEvery { getCategoryService.getNullableByCategoryCode(any()) } returns makeCategory(CategoryCode.TOP)
-        coEvery { getProductService.getMinProductAndMaxProduct(any()) } returns
+        every { getCategoryService.getNullableByCategoryCode(any()) } returns makeCategory(CategoryCode.TOP)
+        every { getProductService.getMinProductAndMaxProduct(any()) } returns
                 MinAndMaxPriceProductDto(나이키_상의, 노스페이스_상의)
-        coEvery { getBrandService.getMapByBrandIds(any()) } returns brandMap
+        every { getBrandService.getMapByBrandIds(any()) } returns brandMap
 
         val result = getPriceRankApplicationService.searchMinAndMaxPriceBrandByCategory(CategoryCode.TOP)
 
         assertThat(result.category).isEqualTo(CategoryCode.TOP)
         assertThat(result.minPriceBrand[0].brandName).isEqualTo(Brand.나이키.brandName)
-        assertThat(result.minPriceBrand[0].price.getValue()).isEqualTo(나이키_상의.price.getValue())
+        assertThat(result.minPriceBrand[0].price).isEqualTo(나이키_상의.price.getValue())
         assertThat(result.maxPriceBrand[0].brandName).isEqualTo(Brand.노스페이스.brandName)
-        assertThat(result.maxPriceBrand[0].price.getValue()).isEqualTo(노스페이스_상의.price.getValue())
+        assertThat(result.maxPriceBrand[0].price).isEqualTo(노스페이스_상의.price.getValue())
     }
 }

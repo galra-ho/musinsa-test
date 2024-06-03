@@ -5,7 +5,7 @@ import com.example.musinsa.fixture.*
 import com.example.musinsa.presenter.request.AddProductRequest
 import com.example.musinsa.presenter.request.UpdateProductRequest
 import com.example.musinsa.support.UnitTest
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -38,15 +38,15 @@ class SetProductApplicationServiceTest {
             price = product.price.getValue()
         )
 
-        coEvery { getBrandService.getById(any()) } returns addBrand
-        coEvery { getCategoryService.getByCode(any()) } returns findCategoryCode
-        coEvery { setProductService.addProduct(any(), any(), any()) } returns product
+        every { getBrandService.getById(any()) } returns addBrand
+        every { getCategoryService.getByCode(any()) } returns findCategoryCode
+        every { setProductService.addProduct(any(), any(), any()) } returns product
 
         val result = setProductApplicationService.add(request)
 
         assertThat(result.productId).isEqualTo(product.id)
         assertThat(result.price).isEqualByComparingTo(product.price.getValue())
-        assertThat(result.categoryCode).isEqualTo(product.category.code.description)
+        assertThat(result.categoryCode).isEqualTo(product.category.code)
         assertThat(result.brandName).isEqualTo(addBrand.name)
 
         verify(exactly = 1) {
@@ -68,10 +68,10 @@ class SetProductApplicationServiceTest {
             updatePrice = findProduct.price.getValue()
         )
 
-        coEvery { getProductService.getById(any()) } returns findProduct
-        coEvery { getBrandService.getById(any()) } returns findBrand
-        coEvery { getCategoryService.getByCode(any()) } returns makeCategory(code = CategoryCode.TOP)
-        coEvery { setProductService.update(any(), any(), any(), any()) } returns makeProduct(Product.노스페이스_상의, Brand.노스페이스)
+        every { getProductService.getById(any()) } returns findProduct
+        every { getBrandService.getById(any()) } returns findBrand
+        every { getCategoryService.getByCode(any()) } returns makeCategory(code = CategoryCode.TOP)
+        every { setProductService.update(any(), any(), any(), any()) } returns makeProduct(Product.노스페이스_상의, Brand.노스페이스)
 
         val result = setProductApplicationService.update(request, findProduct.id!!)
 
@@ -91,8 +91,8 @@ class SetProductApplicationServiceTest {
     fun `상품을 삭제 할때 상품, 브랜드 카테고리코드가 존재하는지 체크 한 후 삭제한다`() {
         val findProduct = makeProduct(Product.노스페이스_상의, Brand.노스페이스)
 
-        coEvery { getProductService.getById(any()) } returns findProduct
-        coEvery { setProductService.delete(any()) } returns makeProduct(Product.노스페이스_상의, Brand.노스페이스)
+        every { getProductService.getById(any()) } returns findProduct
+        every { setProductService.delete(any()) } returns makeProduct(Product.노스페이스_상의, Brand.노스페이스)
 
         val result = setProductApplicationService.delete(findProduct.id!!)
 

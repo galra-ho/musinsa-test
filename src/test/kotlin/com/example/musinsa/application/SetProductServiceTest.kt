@@ -4,7 +4,7 @@ import com.example.musinsa.domain.enums.CategoryCode
 import com.example.musinsa.fixture.*
 import com.example.musinsa.infrastructure.ProductProvider
 import com.example.musinsa.support.UnitTest
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -26,7 +26,7 @@ class SetProductServiceTest {
         val requestCategoryCode = makeCategory(CategoryCode.TOP)
         val product = makeProduct(Product.캉골_상의, Brand.캉골)
 
-        coEvery { productProvider.save(any()) } returns product
+        every { productProvider.save(any()) } returns product
 
         val result =
             setProductService.addProduct(requestBrand, requestCategoryCode, product.price.getValue())

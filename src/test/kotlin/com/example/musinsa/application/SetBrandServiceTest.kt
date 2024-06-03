@@ -5,7 +5,7 @@ import com.example.musinsa.fixture.Brand
 import com.example.musinsa.fixture.makeBrand
 import com.example.musinsa.infrastructure.BrandProvider
 import com.example.musinsa.support.UnitTest
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -34,7 +34,7 @@ class SetBrandServiceTest {
     @Test
     fun `브랜드가 존재하지 않으면 상품을 등록한다`() {
         val brand = makeBrand(Brand.캉골)
-        coEvery { brandProvider.save(any()) } returns brand
+        every { brandProvider.save(any()) } returns brand
 
         val result = setBrandService.addBrand(null, Brand.캉골.brandName)
 

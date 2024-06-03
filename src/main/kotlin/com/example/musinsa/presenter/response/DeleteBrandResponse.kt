@@ -5,13 +5,15 @@ import java.time.LocalDateTime
 
 data class DeleteBrandResponse(
     val name: String,
-    val updatedAt: LocalDateTime
+    val updatedAt: LocalDateTime,
+    val brandId: Long
 ) {
     companion object {
         fun from(brand: BrandEntity): DeleteBrandResponse {
             return DeleteBrandResponse(
                 name = brand.name,
-                updatedAt = brand.updatedAt
+                updatedAt = brand.updatedAt,
+                brandId = brand.id!!
             )
         }
     }

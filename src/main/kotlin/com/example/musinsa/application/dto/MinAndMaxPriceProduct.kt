@@ -8,7 +8,7 @@ data class MinAndMaxPriceProductDto(
     val maxPriceProduct: ProductEntity
 ) {
     fun getBrandIds(): List<Long> {
-        return listOf(minPriceProduct.id!!, maxPriceProduct.id!!)
+        return listOf(minPriceProduct.brand.id!!, maxPriceProduct.brand.id!!)
     }
 
     companion object {

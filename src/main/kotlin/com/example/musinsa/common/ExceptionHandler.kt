@@ -16,7 +16,7 @@ class ExceptionHandler {
         )
     }
 
-    @ExceptionHandler(value = [IllegalArgumentException::class])
+    @ExceptionHandler(value = [BadRequestException::class])
     fun illegalArgumentException(exception: CommonException): ResponseEntity<String> {
         return CommonResponse.convert(
             exception.errorCode.message, HttpStatus.BAD_REQUEST

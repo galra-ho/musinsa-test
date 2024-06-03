@@ -6,7 +6,7 @@ import com.example.musinsa.domain.enums.CategoryCode
 import com.example.musinsa.fixture.*
 import com.example.musinsa.infrastructure.ProductProvider
 import com.example.musinsa.support.UnitTest
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -23,7 +23,7 @@ class GetProductServiceTest {
 
     @Test
     fun `상품이 존재하지 않으면 예외가 발생한다`() {
-        coEvery { productProvider.findNullableById(any()) } returns null
+        every { productProvider.findNullableById(any()) } returns null
 
         assertThatThrownBy {
             getProductService.getById(12)
@@ -41,7 +41,7 @@ class GetProductServiceTest {
         val 노스페이스 = makeProduct(Product.노스페이스_상의, Brand.노스페이스)
         val 나이키 = makeProduct(Product.나이키_상의, Brand.나이키)
 
-        coEvery { productProvider.findByCategory(any()) } returns
+        every { productProvider.findByCategory(any()) } returns
                 Products(listOf(아디다스, 노스페이스, 나이키))
 
         val result = getProductService.getMinPriceByCategory(makeCategory(CategoryCode.TOP))
@@ -60,7 +60,7 @@ class GetProductServiceTest {
         val 아디다스 = makeProduct(Product.아디다스_신발, Brand.아디다스)
         val 나이키 = makeProduct(Product.나이키_신발, Brand.나이키)
 
-        coEvery { productProvider.findAllBrand(any()) } returns
+        every { productProvider.findAllBrand(any()) } returns
                 Products(listOf(아디다스, 나이키))
 
         val result = getProductService.getMinPriceByBrand(makeBrand(Brand.나이키))
@@ -78,7 +78,7 @@ class GetProductServiceTest {
         val 아디다스 = makeProduct(Product.아디다스_신발, Brand.아디다스)
         val 나이키 = makeProduct(Product.나이키_신발, Brand.나이키)
 
-        coEvery { productProvider.findByCategory(any()) } returns
+        every { productProvider.findByCategory(any()) } returns
                 Products(listOf(아디다스, 나이키))
 
         val result = getProductService.getMinProductAndMaxProduct(makeCategory(CategoryCode.SNEAKERS))

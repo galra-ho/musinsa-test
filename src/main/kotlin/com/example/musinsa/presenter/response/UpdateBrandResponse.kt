@@ -6,14 +6,16 @@ import java.time.LocalDateTime
 data class UpdateBrandResponse(
     val name: String,
     val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime
+    val updatedAt: LocalDateTime,
+    val brandId: Long
 ) {
     companion object {
         fun from(updateBoard: BrandEntity): UpdateBrandResponse =
             UpdateBrandResponse(
                 name = updateBoard.name,
                 createdAt = updateBoard.createdAt,
-                updatedAt = updateBoard.updatedAt
+                updatedAt = updateBoard.updatedAt,
+                brandId = updateBoard.id!!
             )
     }
 }

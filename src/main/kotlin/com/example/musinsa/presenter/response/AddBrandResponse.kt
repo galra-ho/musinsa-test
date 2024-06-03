@@ -4,6 +4,7 @@ import com.example.musinsa.domain.entity.BrandEntity
 import java.time.LocalDateTime
 
 data class AddBrandResponse(
+    val brandId: Long,
     val name: String,
     val createdAt: LocalDateTime
 ) {
@@ -11,7 +12,8 @@ data class AddBrandResponse(
         fun from(brand: BrandEntity): AddBrandResponse =
             AddBrandResponse(
                 name = brand.name,
-                createdAt = brand.createdAt
+                createdAt = brand.createdAt,
+                brandId = brand.id!!
             )
     }
 }

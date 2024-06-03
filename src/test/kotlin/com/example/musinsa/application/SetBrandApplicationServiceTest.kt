@@ -3,7 +3,7 @@ package com.example.musinsa.application
 import com.example.musinsa.fixture.Brand
 import com.example.musinsa.fixture.makeBrand
 import com.example.musinsa.support.UnitTest
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
@@ -23,8 +23,8 @@ class SetBrandApplicationServiceTest {
     fun `브랜드를 등록할때 기존에 등록된 브랜드가 존재하는지 체크한 후 등록한다`() {
         val addBrand = makeBrand(Brand.나이키)
 
-        coEvery { getBrandService.getNullableByName(any()) } returns null
-        coEvery { setBrandService.addBrand(any(), any()) } returns addBrand
+        every { getBrandService.getNullableByName(any()) } returns null
+        every { setBrandService.addBrand(any(), any()) } returns addBrand
 
 
         val result = setBrandApplicationService.add(Brand.나이키.brandName)
@@ -42,8 +42,8 @@ class SetBrandApplicationServiceTest {
         val findBrand = makeBrand(Brand.나이키)
         val updateBrand = makeBrand(Brand.나이키)
 
-        coEvery { getBrandService.getById(any()) } returns findBrand
-        coEvery { setBrandService.update(any(), any()) } returns updateBrand
+        every { getBrandService.getById(any()) } returns findBrand
+        every { setBrandService.update(any(), any()) } returns updateBrand
 
 
         val result = setBrandApplicationService.update(Brand.나이키.brandName, Brand.나이키.id)
@@ -61,8 +61,8 @@ class SetBrandApplicationServiceTest {
         val findBrand = makeBrand(Brand.나이키)
         val deleteBoard = makeBrand(Brand.나이키)
 
-        coEvery { getBrandService.getById(any()) } returns findBrand
-        coEvery { setBrandService.delete(any()) } returns deleteBoard
+        every { getBrandService.getById(any()) } returns findBrand
+        every { setBrandService.delete(any()) } returns deleteBoard
 
         val result = setBrandApplicationService.delete(Brand.나이키.id)
 
