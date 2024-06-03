@@ -1,7 +1,7 @@
 package com.example.musinsa.application
 
-import com.example.musinsa.fixture.Brand
-import com.example.musinsa.fixture.makeBrand
+import com.example.musinsa.support.fixture.Brand
+import com.example.musinsa.support.fixture.makeBrand
 import com.example.musinsa.support.UnitTest
 import io.mockk.every
 import io.mockk.mockk

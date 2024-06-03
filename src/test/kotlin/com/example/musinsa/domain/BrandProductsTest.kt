@@ -1,9 +1,9 @@
 package com.example.musinsa.domain
 
-import com.example.musinsa.fixture.Brand
-import com.example.musinsa.fixture.Product
-import com.example.musinsa.fixture.makeBrand
-import com.example.musinsa.fixture.makeProduct
+import com.example.musinsa.support.fixture.Brand
+import com.example.musinsa.support.fixture.Product
+import com.example.musinsa.support.fixture.makeBrand
+import com.example.musinsa.support.fixture.makeProduct
 import com.example.musinsa.support.UnitTest
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat

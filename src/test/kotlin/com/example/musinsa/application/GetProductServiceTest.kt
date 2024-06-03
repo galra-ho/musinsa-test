@@ -6,6 +6,7 @@ import com.example.musinsa.domain.enums.CategoryCode
 import com.example.musinsa.fixture.*
 import com.example.musinsa.infrastructure.ProductProvider
 import com.example.musinsa.support.UnitTest
+import com.example.musinsa.support.fixture.*
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

@@ -1,4 +1,4 @@
-package com.example.musinsa.fixture
+package com.example.musinsa.support.fixture
 
 import com.example.musinsa.domain.ProductPrice
 import com.example.musinsa.domain.entity.BrandEntity

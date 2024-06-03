@@ -9,8 +9,6 @@ import com.example.musinsa.infrastructure.repository.ProductJpaRepository
 import com.example.musinsa.presenter.request.AddProductRequest
 import com.example.musinsa.presenter.request.UpdateProductRequest
 import com.example.musinsa.support.IntegrationTest
-import io.restassured.RestAssured
-import io.restassured.http.ContentType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.data.repository.findByIdOrNull

@@ -1,13 +1,11 @@
 package com.example.musinsa.presenter
 
 import com.example.musinsa.domain.entity.BrandEntity
-import com.example.musinsa.fixture.Brand
+import com.example.musinsa.support.fixture.Brand
 import com.example.musinsa.infrastructure.repository.BrandJpaRepository
 import com.example.musinsa.presenter.request.AddBrandRequest
 import com.example.musinsa.presenter.request.UpdateBrandRequest
 import com.example.musinsa.support.IntegrationTest
-import io.restassured.RestAssured
-import io.restassured.http.ContentType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.data.repository.findByIdOrNull
