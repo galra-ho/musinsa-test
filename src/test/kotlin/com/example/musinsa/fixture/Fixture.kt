@@ -59,3 +59,11 @@ fun makeProduct(
         isDeleted = isDeleted
     )
 }
+
+fun makeCategory(
+    code: CategoryCode
+): CategoryEntity {
+    return CategoryEntity(
+        code = code
+    )
+}

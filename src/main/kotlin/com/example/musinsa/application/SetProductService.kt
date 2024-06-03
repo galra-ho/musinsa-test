@@ -22,7 +22,7 @@ class SetProductService(
         return product.delete()
     }
 
-    fun update(findProduct: ProductEntity, brand: BrandEntity, category: CategoryEntity, updatePrice: ProductPrice): ProductEntity {
-        return findProduct.update(brand, category, updatePrice)
+    fun update(findProduct: ProductEntity, brand: BrandEntity, category: CategoryEntity, updatePrice: BigDecimal): ProductEntity {
+        return findProduct.update(brand, category, ProductPrice(updatePrice))
     }
 }
