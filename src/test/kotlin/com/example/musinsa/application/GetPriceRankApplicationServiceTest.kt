@@ -3,10 +3,8 @@ package com.example.musinsa.application
 import com.example.musinsa.application.dto.MinAndMaxPriceProductDto
 import com.example.musinsa.domain.Products
 import com.example.musinsa.domain.enums.CategoryCode
-import com.example.musinsa.fixture.*
 import com.example.musinsa.support.UnitTest
 import com.example.musinsa.support.fixture.*
-import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
@@ -56,19 +54,13 @@ class GetPriceRankApplicationServiceTest {
         val 나이키_신발 = makeProduct(Product.나이키_신발, Brand.나이키)
         val 나이키_상의 = makeProduct(Product.나이키_상의, Brand.나이키)
         val 나이키_양말 = makeProduct(Product.나이키_양말, Brand.나이키)
-        val 아디다스_양말 = makeProduct(Product.아디다스_양말, Brand.아디다스)
-        val 아디다스_신발 = makeProduct(Product.아디다스_신발, Brand.아디다스)
-        val 아디다스_상의 = makeProduct(Product.아디다스_상의, Brand.아디다스)
 
 
         every { getBrandService.getAll() } returns listOf(makeBrand(Brand.나이키), makeBrand(Brand.아디다스))
 
         every { getCategoryService.getCategoryMap() } returns categoryCodeMap
-        every { getProductService.getMinPriceByBrand(makeBrand(Brand.아디다스)) } returns
-                Products(listOf(아디다스_양말, 아디다스_신발, 아디다스_상의))
-        every { getProductService.getMinPriceByBrand(makeBrand(Brand.나이키)) } returns
+        every { getProductService.getMinPriceByBrand(any()) } returns
                 Products(listOf(나이키_신발, 나이키_상의, 나이키_양말))
-
 
 
         val result = getPriceRankApplicationService.getMinPriceBrand()
