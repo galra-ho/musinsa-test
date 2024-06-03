@@ -6,6 +6,7 @@ import com.example.musinsa.infrastructure.ProductProvider
 import com.example.musinsa.support.UnitTest
 import io.mockk.coEvery
 import io.mockk.mockk
+import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -33,6 +34,10 @@ class SetProductServiceTest {
         assertThat(result.id).isEqualTo(product.id)
         assertThat(result.price.getValue()).isEqualTo(product.price.getValue())
         assertThat(result.isDeleted).isFalse
+
+        verify(exactly = 1) {
+            productProvider.save(any())
+        }
     }
 
     @Test

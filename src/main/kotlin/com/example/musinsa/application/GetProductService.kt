@@ -9,26 +9,31 @@ import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
 import com.example.musinsa.domain.entity.ProductEntity
 import com.example.musinsa.infrastructure.ProductProvider
+import org.springframework.transaction.annotation.Transactional
 
 @ImplementService
 class GetProductService(
     private val productProvider: ProductProvider
 ) {
+    @Transactional(readOnly = true)
     fun getById(id: Long): ProductEntity {
         return productProvider.findNullableById(id)
             ?: throw NotFoundException(ErrorCode.NOT_FOUND_PRODUCT)
     }
 
-    fun getMinPriceCategory(category: CategoryEntity): ProductEntity {
+    @Transactional(readOnly = true)
+    fun getMinPriceByCategory(category: CategoryEntity): ProductEntity {
         return productProvider.findByCategory(category)
             .getMinPriceProduct()
     }
 
+    @Transactional(readOnly = true)
     fun getMinPriceByBrand(brand: BrandEntity): Products {
         return productProvider.findAllBrand(brand)
-            .getMinPriceByCategory()
+            .getMinPriceGroupByCategory()
     }
 
+    @Transactional(readOnly = true)
     fun getMinProductAndMaxProduct(category: CategoryEntity): MinPriceAndMaxPriceProduct {
         val products = productProvider.findByCategory(category)
         return MinPriceAndMaxPriceProduct.from(products)

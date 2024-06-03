@@ -9,7 +9,7 @@ import java.math.BigDecimal
 value class Products(
     val productEntity: List<ProductEntity>
 ) {
-    fun getMinPriceByCategory(): Products {
+    fun getMinPriceGroupByCategory(): Products {
         val result = this.productEntity
             .groupBy { it.category.id }
             .map { (_, product) ->
@@ -25,7 +25,10 @@ value class Products(
     }
 
     fun getMinPriceProduct(): ProductEntity {
-        return getMinPriceProduct(productEntity)
+        val products =
+            getMinPriceGroupByCategory().productEntity
+
+        return getMinPriceProduct(products)
     }
 
     private fun getMinPriceProduct(productEntity: List<ProductEntity>): ProductEntity {

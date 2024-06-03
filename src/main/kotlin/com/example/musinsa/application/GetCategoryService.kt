@@ -14,7 +14,6 @@ import org.springframework.cache.annotation.Cacheable
 class GetCategoryService(
     private val categoryProvider: CategoryProvider
 ) {
-
     fun getByCode(categoryCode: CategoryCode): CategoryEntity {
         return categoryProvider.findNullableByCategoryCode(categoryCode)
             ?: throw NotFoundException(ErrorCode.NOT_FOUND_CATEGORY)

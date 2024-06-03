@@ -33,7 +33,7 @@ class GetPriceRankApplicationService(
         brandMap: Map<Long, BrandEntity>
     ): List<MinPriceProductResponse> {
         return categories.map { category ->
-            val product = getProductService.getMinPriceCategory(category)
+            val product = getProductService.getMinPriceByCategory(category)
             val brand = brandMap[product.brand.id]
                 ?: throw NotFoundException(ErrorCode.NOT_FOUND_BRAND)
             MinPriceProductResponse.of(product, brand, category)

@@ -1,5 +1,6 @@
 package com.example.musinsa.infrastructure
 
+import com.example.musinsa.domain.ProductPrice
 import com.example.musinsa.domain.Products
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
