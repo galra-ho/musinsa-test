@@ -17,7 +17,7 @@ data class AddProductResponse(
                 productId = product.id!!,
                 brandName = product.brand.name,
                 categoryCode = product.category.code.description,
-                price = product.price.price,
+                price = product.price.getValue(),
                 createdAt = product.createdAt
             )
         }

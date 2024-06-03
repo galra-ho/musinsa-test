@@ -21,7 +21,7 @@ value class Products(
 
     fun calcTotalMinPrice(): BigDecimal {
         return this.productEntity
-            .sumOf { it.price.price }
+            .sumOf { it.price.getValue() }
     }
 
     fun getMinPriceProduct(): ProductEntity {
@@ -30,12 +30,12 @@ value class Products(
 
     private fun getMinPriceProduct(productEntity: List<ProductEntity>): ProductEntity {
         return productEntity
-            .minByOrNull { it.price.price }
+            .minByOrNull { it.price.getValue() }
             ?: throw NotFoundException(NOT_FOUND_PRICE)
     }
 
     fun getMaxPriceProduct(): ProductEntity =
         this.productEntity
-            .maxByOrNull { it.price.price }
+            .maxByOrNull { it.price.getValue() }
             ?: throw NotFoundException(NOT_FOUND_PRICE)
 }

@@ -6,12 +6,13 @@ import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
 import com.example.musinsa.domain.entity.ProductEntity
 import com.example.musinsa.infrastructure.ProductProvider
+import java.math.BigDecimal
 
 @ImplementService
 class SetProductService(
     private val productProvider: ProductProvider
 ) {
-    fun addProduct(brand: BrandEntity, category: CategoryEntity, price: ProductPrice): ProductEntity {
+    fun addProduct(brand: BrandEntity, category: CategoryEntity, price: BigDecimal): ProductEntity {
         val product = ProductEntity.of(brand, category, price)
 
         return productProvider.save(product)

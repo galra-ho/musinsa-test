@@ -6,7 +6,6 @@ import com.example.musinsa.domain.ProductPrice
 import com.example.musinsa.domain.entity.BrandEntity
 import com.example.musinsa.domain.entity.CategoryEntity
 import com.example.musinsa.domain.entity.ProductEntity
-import java.math.BigDecimal
 
 data class SearchCategoryResponse(
     val category: String,

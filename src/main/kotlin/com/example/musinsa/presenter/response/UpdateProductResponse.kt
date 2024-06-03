@@ -15,7 +15,7 @@ data class UpdateProductResponse(
             return UpdateProductResponse(
                 brandName = product.brand.name,
                 categoryCode = product.category.code.description,
-                price = product.price.price,
+                price = product.price.getValue(),
                 updatedAt = product.updatedAt
             )
         }

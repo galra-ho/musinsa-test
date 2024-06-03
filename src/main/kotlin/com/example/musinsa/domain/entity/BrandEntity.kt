@@ -26,9 +26,9 @@ data class BrandEntity(
     }
 
     companion object {
-        fun from(productName: String): BrandEntity {
+        fun from(name: String): BrandEntity {
             return BrandEntity(
-                name = productName,
+                name = name,
                 isDeleted = false
             )
         }

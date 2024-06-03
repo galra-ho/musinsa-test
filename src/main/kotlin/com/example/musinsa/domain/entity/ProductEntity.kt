@@ -2,6 +2,7 @@ package com.example.musinsa.domain.entity
 
 import com.example.musinsa.domain.ProductPrice
 import jakarta.persistence.*
+import java.math.BigDecimal
 
 @Entity
 @Table(name = "product")
@@ -18,7 +19,7 @@ data class ProductEntity(
     @JoinColumn(name = "category_id")
     var category: CategoryEntity,
 
-    @Column(name = "price")
+    @Embedded
     var price: ProductPrice,
 
     @Column(name = "is_deleted")
@@ -44,12 +45,12 @@ data class ProductEntity(
         fun of(
             brand: BrandEntity,
             category: CategoryEntity,
-            price: ProductPrice
+            price: BigDecimal
         ): ProductEntity {
             return ProductEntity(
                 brand = brand,
                 category = category,
-                price = price,
+                price = ProductPrice(price),
                 isDeleted = false
             )
         }
