@@ -35,10 +35,6 @@ class GetPriceRankApplicationService(
     ): List<MinPriceProductResponse> {
         return categories.map { category ->
             val product = getProductService.getMinPriceByCategory(category)
-
-            println("========")
-            println(product)
-
             val brand = brandMap[product.brand.id]
                 ?: throw NotFoundException(ErrorCode.NOT_FOUND_BRAND)
             MinPriceProductResponse.of(product, brand, category)
@@ -66,16 +62,10 @@ class GetPriceRankApplicationService(
 
     @Transactional(readOnly = true)
     fun searchMinAndMaxPriceBrandByCategory(code: CategoryCode): SearchCategoryResponse {
-        println("==== get " +code)
         val category = getCategoryService.getNullableByCategoryCode(code)
-
-        println(category)
         val minPriceAndMaxPriceProduct =
             getProductService.getMinProductAndMaxProduct(category)
         val brandIds = minPriceAndMaxPriceProduct.getBrandIds()
-
-        println("=======")
-        println(brandIds)
         val brandMap = getBrandService.getMapByBrandIds(brandIds)
 
         return SearchCategoryResponse.of(
